@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">AndroidLab1</string>
+    <string name="hello_world">Hello everyone!</string>
+    <string name="button_update">Update</string>
+    <string-array name="spinneroptions">
+        <item name="Greeting 1">Hello to the world!</item>
+        <item name="Greeting 2">Everyone around the world - Hello!</item>
+        <item name="Greeting 3">There are so many ways to say hello!</item> <!-- The item name attribute doesn't work! Need to change in activity_main.xml -->
+    </string-array>
+</resources>

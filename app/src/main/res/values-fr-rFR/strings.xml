@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AndroidLab1</string>
+    <string name="hello_world">Bonjour tout les monde!</string>
+    <string name="button_update">Réactualiser</string>
+    <string-array name="spinneroptions">
+        <item name="Greeting 1">Bonjour au monde!</item>
+        <item name="Greeting 2">Tout le monde dans le monde - Bonjour!</item>
+        <item name="Greeting 3">Il y a tellement de façons de dire bonjour!</item>
+    </string-array>
+</resources>
