@@ -1,11 +1,14 @@
 package com.example.androidlab1;
 
 
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.matcher.BoundedMatcher;
 import androidx.test.filters.LargeTest;
@@ -21,6 +24,7 @@ import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.PositionAssertions.isCompletelyAbove;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -51,6 +55,37 @@ public class LayoutTest {
             @Override
             public boolean matchesSafely(LinearLayout lo) {
                 return lo.getOrientation() == LinearLayout.VERTICAL;
+            }
+        };
+    }
+
+    @Test
+    public void stackingOrder() {
+        onView(withId(R.id.textView)).check(matches(isDisplayed()));
+        onView(withId(R.id.spinner)).check(matches(isDisplayed()));
+        onView(withId(R.id.button)).check(matches(isDisplayed()));
+        onView(withId(R.id.spinner)).check(isCompletelyAbove(withId(R.id.button)));
+        onView(withId(R.id.textView)).check(isCompletelyAbove(withId(R.id.spinner)));
+    }
+
+    @Test
+    public void textViewConstraints() {
+        onView(withId(R.id.textView)).check(matches(hasCorrectTextViewConstraints()));
+    }
+
+    Matcher<View> hasCorrectTextViewConstraints() {
+        return new BoundedMatcher<View, TextView>(TextView.class) {
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("Check if this TextView has the correct constraints set.");
+            }
+
+            @Override
+            public boolean matchesSafely(TextView tv) {
+                ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) tv.getLayoutParams();
+                DisplayMetrics displayMetrics = tv.getContext().getResources().getDisplayMetrics();
+                int dpSize = (int) ((params.topMargin/displayMetrics.density)+0.5);
+                return dpSize == 32;
             }
         };
     }
